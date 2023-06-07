@@ -1,19 +1,29 @@
+import datetime
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 import logging
 import requests
 import json
 import time
+from dotenv import load_dotenv
+import os
+from database import *
 
+
+load_dotenv() 
 
 class Main:
     def __init__(self):
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        self.HOST = os.getenv('HOST')
+        self.TOKEN = os.getenv('TOKEN')
+        self.TICKETS = os.getenv('TICKETS')
+        self.T_MAX = os.getenv('T_MAX')
+        self.T_MIN = os.getenv('T_MIN')
+        self.DATABASE = os.getenv('DATABASE')
+        
+        createDb(database_name)
+        self.mydb = connectToDatabase(database_name)
+        self.mycursor = self.mydb.cursor()
 
     def __del__(self):
         if self._hub_connection != None:
@@ -45,7 +55,6 @@ class Main:
             )
             .build()
         )
-
         self._hub_connection.on("ReceiveSensorData", self.onSensorDataReceived)
         self._hub_connection.on_open(lambda: print("||| Connection opened."))
         self._hub_connection.on_close(lambda: print("||| Connection closed."))
@@ -53,10 +62,13 @@ class Main:
 
     def onSensorDataReceived(self, data):
         try:
+            dateFormat='%Y-%m-%dT%H:%M:%S.%f'
             print(data[0]["date"] + " --> " + data[0]["data"])
             date = data[0]["date"]
+            convertedDate = datetime.datetime.strptime(date[:25], dateFormat)
             dp = float(data[0]["data"])
-            self.send_temperature_to_fastapi(date, dp)
+            #self.send_temperature_to_fastapi(date, dp)
+            self.send_event_to_database(convertedDate, dp)
             self.analyzeDatapoint(date, dp)
         except Exception as err:
             print(err)
@@ -74,11 +86,9 @@ class Main:
 
     def send_event_to_database(self, timestamp, event):
         try:
-            # To implement
-            pass
+            createSensorDataEntry(self.mydb, self.mycursor, timestamp, event)
         except requests.exceptions.RequestException as e:
-            # To implement
-            pass
+            print(e)
 
 
 if __name__ == "__main__":
