@@ -16,7 +16,7 @@ python_version = "3.9"
 
 [scripts]
 start = "python src/main.py"
-test = "# To implement"
+test = "pytest"
 lint = "# To implement"
 
 [pipenv]
