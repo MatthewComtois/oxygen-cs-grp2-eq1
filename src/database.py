@@ -4,10 +4,9 @@ import mysql.connector
 
 load_dotenv()
 
-database_name = os.getenv('database_name')
-database_host = os.getenv('database_host')
-database_user = os.getenv('database_user')
-database_password = os.getenv('database_password')
+database_host = os.getenv('database_host') if (os.getenv('database_host') != None and os.getenv('database_host')) else "localhost"
+database_user = os.getenv('database_user') if (os.getenv('database_user') != None and os.getenv('database_user')) else "root"
+database_password = os.getenv('database_password') if (os.getenv('database_password') != None) else "root"
 
 
 

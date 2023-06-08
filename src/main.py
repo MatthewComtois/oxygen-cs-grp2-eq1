@@ -14,15 +14,18 @@ load_dotenv()
 class Main:
     def __init__(self):
         self._hub_connection = None
-        self.HOST = os.getenv('HOST')
-        self.TOKEN = os.getenv('TOKEN')
-        self.TICKETS = os.getenv('TICKETS')
-        self.T_MAX = os.getenv('T_MAX')
-        self.T_MIN = os.getenv('T_MIN')
-        self.DATABASE = os.getenv('DATABASE')
+        self.HOST = os.getenv('HOST') if (os.getenv('HOST') != None and os.getenv('HOST')) else "http://34.95.34.5"
+        if (os.getenv('TOKEN')!= None and os.getenv('TOKEN')):
+            self.TOKEN = os.getenv('TOKEN') 
+        else:
+            raise Exception("La variable 'Token' doit être définie comme variable d'environnement.")
+        self.TICKETS = os.getenv('TICKETS') if (os.getenv('TICKETS') != None and os.getenv('TICKETS')) else "25"
+        self.T_MAX = os.getenv('T_MAX') if (os.getenv('T_MAX') != None and os.getenv('HOST')) else "80"
+        self.T_MIN = os.getenv('T_MIN') if (os.getenv('T_MIN') != None and os.getenv('T_MIN')) else "60"
+        self.DATABASE = os.getenv('database_name') if (os.getenv('database_name') != None and os.getenv('database_name')) else "oxygenCsGrp2Eq1E23Db"
         
-        createDb(database_name)
-        self.mydb = connectToDatabase(database_name)
+        createDb(self.DATABASE)
+        self.mydb = connectToDatabase(self.DATABASE)
         self.mycursor = self.mydb.cursor()
 
     def __del__(self):
