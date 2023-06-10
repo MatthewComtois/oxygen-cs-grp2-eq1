@@ -1,17 +1,35 @@
+# -----IMPORTANT-----
+# -----CODE EMPRUNTÉ-----
+# le fichier a été créer en suivant un tutoriel dans le lien suivant :
+# https://mothishdeenadayalan.medium.com/containerizing-a-python-app-mysql-python-docker-1ce64e444ed9
+# J'ai changé quelque petite ligne, mais la grande majorité du code est le même 
+# que le tutoriel.
+
 version: "3"
 services:
-    db:
+    mydb:
         platform: linux/x86_64
         container_name: mydb
         image: mysql:5.7
         ports:
             - "32001:3306"
+        command: [
+            '--max-connections=1000',
+            '--wait_timeout=28800',
+            '--max_allowed_packet=32505856'
+        ]
         environment:
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+            MYSQL_ROOT_PASSWORD: "root"
+
+        volumes: [ "mysqldata:/var/lib/mysql" ]
+
     app:
         container_name: oxygen-cs-grp2-eq1-app
         links:
-            - "db"
+            - "mydb"
         build: ./
         ports:
             - "5001:5000"
+        
+volumes: { mysqldata: {} }

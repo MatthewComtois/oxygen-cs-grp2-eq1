@@ -1,3 +1,10 @@
+# -----IMPORTANT-----
+# -----CODE EMPRUNTÉ-----
+# le fichier a été créer en suivant un tutoriel dans le lien suivant :
+# https://sourcery.ai/blog/python-docker/
+# J'ai changé quelque petite ligne, mais la grande majorité du code est
+# le même que le tutoriel.
+
 ## To implement
 FROM python:3.9-slim AS base
 
@@ -5,7 +12,6 @@ ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONFAULTHANDLER 1
-ENV TOKEN nAu36bOSxt
 
 FROM base AS python-deps
 

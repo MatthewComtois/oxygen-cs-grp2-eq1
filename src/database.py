@@ -35,6 +35,7 @@ def createDb(dbName):
         mydb = connectToDatabase(dbName)
         mycursor = mydb.cursor()
         createSensorDatasTable(mycursor)
+        mydb.close()
 
 def createSensorDatasTable(mycursor):
     mycursor.execute("CREATE TABLE sensorDatas (timestamp DATETIME PRIMARY KEY, temperature FLOAT)")

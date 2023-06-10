@@ -24,9 +24,12 @@ class Main:
         self.T_MIN = os.getenv('T_MIN') if (os.getenv('T_MIN') != None and os.getenv('T_MIN')) else "60"
         self.DATABASE = os.getenv('database_name') if (os.getenv('database_name') != None and os.getenv('database_name')) else "oxygenCsGrp2Eq1E23Db"
         
-        createDb(self.DATABASE)
-        self.mydb = connectToDatabase(self.DATABASE)
-        self.mycursor = self.mydb.cursor()
+        try:
+            createDb(self.DATABASE)
+            self.mydb = connectToDatabase(self.DATABASE)
+            self.mycursor = self.mydb.cursor()
+        except requests.exceptions.RequestException as e:
+            print(e)
 
     def __del__(self):
         if self._hub_connection != None:
@@ -66,7 +69,7 @@ class Main:
     def onSensorDataReceived(self, data):
         try:
             dateFormat='%Y-%m-%dT%H:%M:%S.%f'
-            print(data[0]["date"] + " --> " + data[0]["data"])
+            print(data[0]["date"] + " --> " + data[0]["data"], flush=True)
             date = data[0]["date"]
             convertedDate = datetime.datetime.strptime(date[:25], dateFormat)
             dp = float(data[0]["data"])
