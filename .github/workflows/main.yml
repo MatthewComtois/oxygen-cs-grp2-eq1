@@ -35,10 +35,6 @@ jobs:
           pip install black pytest pylint requests signalrcore python-dotenv mysql-connector-python
           pip install --user pipenv
           pipenv install
-    - name: Verify MySQL connection from host
-      run: |
-        sudo apt-get install -y mysql-client
-        mysql --host 127.0.0.1 --port 32574 -uroot -ppassword -e "SHOW DATABASES"
     - name: Test with pytest
       run:  |
           pipenv run test
