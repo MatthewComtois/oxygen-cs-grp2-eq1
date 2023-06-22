@@ -4,7 +4,7 @@ import mysql.connector
 
 load_dotenv()
 
-database_host = os.getenv('database_host') if (os.getenv('database_host') != None and os.getenv('database_host')) else "localhost"
+database_host = os.getenv('database_host') if (os.getenv('database_host') != None and os.getenv('database_host')) else "mydb"
 database_user = os.getenv('database_user') if (os.getenv('database_user') != None and os.getenv('database_user')) else "root"
 database_password = os.getenv('database_password') if (os.getenv('database_password') != None) else "root"
 
@@ -15,7 +15,8 @@ def connectToDatabase(dbName):
         host=database_host,
         user=database_user,
         password=database_password,
-        database=dbName
+        database=dbName,
+        port=3306
     )
     return mydb;
 
@@ -34,6 +35,7 @@ def createDb(dbName):
         mydb = connectToDatabase(dbName)
         mycursor = mydb.cursor()
         createSensorDatasTable(mycursor)
+        mydb.close()
 
 def createSensorDatasTable(mycursor):
     mycursor.execute("CREATE TABLE sensorDatas (timestamp DATETIME PRIMARY KEY, temperature FLOAT)")

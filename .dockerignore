@@ -1,0 +1,16 @@
+# -----IMPORTANT-----
+# -----CODE EMPRUNTÉ-----
+# le fichier a été créer en suivant un tutoriel dans le lien suivant :
+# https://sourcery.ai/blog/python-docker/
+# J'ai ajouté quelque petite ligne, mais la grande majorité du code est 
+# le même que le tutoriel.
+
+# Ignore everything
+**
+
+# ... except for dependencies and source
+!Pipfile
+!Pipfile.lock
+!src/
+!test/
+!.env
