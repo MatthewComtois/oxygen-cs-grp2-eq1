@@ -46,4 +46,4 @@ jobs:
           python lint.py -p src 
     - name: build docker image
       run:  |
-          docker build . --file Dockerfile --tag OXYGEN-CS-GRP2-EQ1:$(date +%s)
+          docker build . --file Dockerfile --tag oxygen-cs-grp02-eq1:$(date +%s)
