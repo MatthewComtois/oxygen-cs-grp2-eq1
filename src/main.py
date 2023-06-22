@@ -55,13 +55,16 @@ class Main:
             print(err)
 
     def __del__(self):
+        """Delete connection"""
         if self._hub_connection is not None:
             self._hub_connection.stop()
 
     def setup(self):
+        """Setup hub sensor"""
         self.set_sensor_hub()
 
     def start(self):
+        """Start hub connection"""
         self.setup()
         self._hub_connection.start()
 
@@ -70,6 +73,7 @@ class Main:
             time.sleep(2)
 
     def set_sensor_hub(self):
+        """Set sensor hub"""
         self._hub_connection = (
             HubConnectionBuilder()
             .with_url(f"{self.host}/SensorHub?token={self.token}")
@@ -92,6 +96,7 @@ class Main:
         )
 
     def on_sensor_data_received(self, data):
+        """Handle received data"""
         try:
             date_format = "%Y-%m-%dT%H:%M:%S.%f"
             print(data[0]["date"] + " --> " + data[0]["data"], flush=True)
@@ -105,17 +110,20 @@ class Main:
             print(err)
 
     def analyze_datapoint(self, date, data):
+        """Analyze data"""
         if float(data) >= float(self.t_max):
             self.send_action_to_hvac(date, "TurnOnAc", self.tickets)
         elif float(data) <= float(self.t_min):
             self.send_action_to_hvac(date, "TurnOnHeater", self.tickets)
 
     def send_action_to_hvac(self, date, action, nb_tick):
+        """Send data to hvac"""
         request = requests.get(f"{self.host}/api/hvac/{self.token}/{action}/{nb_tick}")
         details = json.loads(request.text)
         print(details)
 
     def send_event_to_database(self, timestamp, event):
+        """Send data to database"""
         try:
             create_sensor_data_entry(self.mydb, self.mycursor, timestamp, event)
         except requests.exceptions.RequestException as err:
