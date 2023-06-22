@@ -17,7 +17,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
-        - 32574:3306
+        - 32001:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -35,6 +35,10 @@ jobs:
           pip install black pytest pylint requests signalrcore python-dotenv mysql-connector-python
           pip install --user pipenv
           pipenv install
+    - name: Verify MySQL connection from host
+      run: |
+        sudo apt-get install -y mysql-client
+        mysql --host 127.0.0.1 --port 3306 -u root -p root -e "SHOW DATABASES"
     - name: Test with pytest
       run:  |
           pipenv run test
