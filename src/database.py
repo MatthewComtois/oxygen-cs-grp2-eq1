@@ -7,7 +7,7 @@ load_dotenv()
 database_host = (
     os.getenv("database_host")
     if (os.getenv("database_host") is not None and os.getenv("database_host"))
-    else "mydb"
+    else "localhost"
 )
 database_user = (
     os.getenv("database_user")
