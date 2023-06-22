@@ -37,7 +37,7 @@ logging.info(
 
 results = Run([path], do_exit=False)
 
-final_score = results.linter.stats["global_note"]
+final_score = results.linter.stats.global_note
 
 if final_score < threshold:
     message = (
