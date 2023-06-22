@@ -5,36 +5,44 @@ testDbName = "testDb"
 sensorDataTableName = "sensorDatas"
 sensorDataTablIdName = "timestamp"
 
+
 def test_createDatabase():
-    createDb(testDbName)
-    assert checkIfDatabaseExist(testDbName) == True
-    dropDb(testDbName)
+    create_db(testDbName)
+    assert check_if_database_exist(testDbName) == True
+    drop_db(testDbName)
+
 
 def test_dropDatabase():
-    createDb(testDbName)
-    assert checkIfDatabaseExist(testDbName) == True
-    dropDb(testDbName)
-    assert checkIfDatabaseExist(testDbName) == False
+    create_db(testDbName)
+    assert check_if_database_exist(testDbName) == True
+    drop_db(testDbName)
+    assert check_if_database_exist(testDbName) == False
 
 
 def test_checkIfCreateTableSensorDatas():
-    createDb(testDbName)
-    assert checkIfDatabaseExist(testDbName) == True
-    assert checkIfTableExist(testDbName, sensorDataTableName) == True
-    dropDb(testDbName)
-    assert checkIfDatabaseExist(testDbName) == False
+    create_db(testDbName)
+    assert check_if_database_exist(testDbName) == True
+    assert check_if_table_exist(testDbName, sensorDataTableName) == True
+    drop_db(testDbName)
+    assert check_if_database_exist(testDbName) == False
+
 
 def test_checkIfCreateRecordSensorDatas():
-    datetimeNow = datetime.datetime.now();
-    datetimeNowString = datetimeNow.strftime('%Y-%m-%d %H:%M:%S')
-    createDb(testDbName)
+    datetimeNow = datetime.datetime.now()
+    datetimeNowString = datetimeNow.strftime("%Y-%m-%d %H:%M:%S")
+    create_db(testDbName)
 
-    mydb = connectToDatabase(testDbName)
+    mydb = connect_to_database(testDbName)
     mycursor = mydb.cursor()
 
-    assert checkIfDatabaseExist(testDbName) == True
-    assert checkIfTableExist(testDbName, sensorDataTableName) == True
-    createSensorDataEntry(mydb, mycursor, datetimeNow, float(12.221))
-    assert checkIfRecordExist(testDbName, sensorDataTableName, sensorDataTablIdName, datetimeNowString) == True
-    dropDb(testDbName)
-    assert checkIfDatabaseExist(testDbName) == False
+    assert check_if_database_exist(testDbName) == True
+    assert check_if_table_exist(testDbName, sensorDataTableName) == True
+    create_sensor_data_entry(mydb, mycursor, datetimeNow, float(12.221))
+    assert (
+        check_if_record_exist(
+            testDbName, sensorDataTableName, sensorDataTablIdName, datetimeNowString
+        )
+        == True
+    )
+    drop_db(testDbName)
+    assert check_if_database_exist(testDbName) == False
