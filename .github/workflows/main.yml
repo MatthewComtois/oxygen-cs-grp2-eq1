@@ -40,5 +40,10 @@ jobs:
     - name: Test with pytest
       run:  |
           pipenv run test
+    - name: Analyse de code statique et de formatage
+      run:  |
+          black .
+          python lint.py -p ../OXYGEN-CS-GRP2-EQ1/src
+
     #- name: Build the Docker image
       #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
