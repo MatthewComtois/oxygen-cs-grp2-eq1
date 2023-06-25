@@ -28,6 +28,12 @@ cd sensor-hub-monitor
 pipenv install
 ```
 
+3. Ajouter les git hook:
+
+Copier tous les git hooks, se retrouvant dans le dossier gitHook,
+à l'intérieur de dossier .git/hooks
+
+
 ## Setup
 
 You need to setup the following variables inside the Main class:
