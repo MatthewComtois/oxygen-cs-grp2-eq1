@@ -82,7 +82,7 @@ jobs:
           architecture: 'x64'
     - name: Docker login
       run: |
-          docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_SECRET}
+          docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_SECRET}}
     - name: Build docker image
       run:  |
           docker build . --file Dockerfile --tag oxygen-cs-grp02-eq1:$(date +%s)
