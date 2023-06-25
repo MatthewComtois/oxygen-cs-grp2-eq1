@@ -7,8 +7,7 @@ on:
     branches: [ "main", "develop" ]
 
 jobs:
-  build:
-
+  Test:
     runs-on: ubuntu-latest
     env:
       database_name: oxygenCsGrp2Eq1E23Db
@@ -40,10 +39,54 @@ jobs:
     - name: Test with pytest
       run:  |
           pipenv run test
-    - name: Analyse de code statique et de formatage
-      run:  |
-          black .
-          python lint.py -p src 
-    - name: build docker image
-      run:  |
-          docker build . --file Dockerfile --tag oxygen-cs-grp02-eq1:$(date +%s)
+  analyseCode:
+    runs-on: ubuntu-latest
+        env:
+          database_name: oxygenCsGrp2Eq1E23Db
+          database_user: root
+          database_password: root
+    
+        steps:
+        - uses: actions/checkout@v3
+        - name: Set up Python 3.9
+          uses: actions/setup-python@v4
+          with:
+              # Semantic version range syntax or exact version of a Python version
+              python-version: '3.9'
+              # Optional - x64 or x86 architecture, defaults to x64
+              architecture: 'x64'
+        - name: Install dependencies
+          run: |
+              python -m pip install --upgrade pip
+              pip install black pylint 
+        - name: Analyse de code statique et de formatage
+          run:  |
+              black .
+              python lint.py -p src 
+
+  buildPush:
+    runs-on: ubuntu-latest
+        env:
+          database_name: oxygenCsGrp2Eq1E23Db
+          database_user: root
+          database_password: root
+    
+        steps:
+        - uses: actions/checkout@v3
+        - name: Set up Python 3.9
+          uses: actions/setup-python@v4
+          with:
+              # Semantic version range syntax or exact version of a Python version
+              python-version: '3.9'
+              # Optional - x64 or x86 architecture, defaults to x64
+              architecture: 'x64'
+        - name: Docker login
+          run: |
+              docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_SECRET}}
+
+        - name: Build docker image
+          run:  |
+              docker build . --file Dockerfile --tag oxygen-cs-grp02-eq1:$(date +%s)
+        - name: Push docker image
+          run:  |
+              docker push ${{secrets.DOCKER_USER}} . --file Dockerfile --tag oxygen-cs-grp02-eq1:$(date +%s)
