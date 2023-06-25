@@ -82,4 +82,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1$(date +%s):latest
+          tags: ${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1${{ steps.date.outputs.date }}:latest
