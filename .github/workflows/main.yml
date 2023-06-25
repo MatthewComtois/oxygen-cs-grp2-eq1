@@ -83,5 +83,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags:  |
-            ${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1$:latest
+            ${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1:latest
             ${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1$:{{ steps.date.outputs.date }}
