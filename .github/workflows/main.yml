@@ -88,4 +88,4 @@ jobs:
           docker build . --file Dockerfile --tag oxygen-cs-grp02-eq1:$(date +%s)
     - name: Push docker image
       run:  |
-          docker push ${{secrets.DOCKER_USER}} . --file Dockerfile --tag oxygen-cs-grp02-eq1:$(date +%s)
+          docker push ${{secrets.DOCKER_USER}}/oxygencsgrp2eq1
