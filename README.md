@@ -29,9 +29,10 @@ pipenv install
 ```
 
 3. Ajouter les git hook:
-
-Copier tous les git hooks, se retrouvant dans le dossier gitHook,
-à l'intérieur de dossier .git/hooks
+```
+pip install pytest pylint pre-commit
+pre-commit install
+```
 
 
 ## Setup

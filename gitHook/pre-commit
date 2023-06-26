@@ -1,5 +1,0 @@
-#!/bin/sh
-black .
-python lint.py -p ../OXYGEN-CS-GRP2-EQ1/src
-python lint.py -p ../OXYGEN-CS-GRP2-EQ1/src
-pytest
