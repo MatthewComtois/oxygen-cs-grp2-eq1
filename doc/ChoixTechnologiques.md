@@ -4,9 +4,9 @@ Ce document explique les différents choix technologiques faits lors de ce proje
 
 ## Choix technologie de l'API
 
-## signalrcore python
-C'est la technologie de base qui était déjà implémenté. Donc, nous avons seulement
-continuer à l'utiliser.
+## signalrcore Python
+C'est la technologie de base qui était déjà implémentée. Donc, nous avons seulement
+continué à l'utiliser.
 
 ## Choix technologie de Base de données
 
@@ -15,7 +15,7 @@ Pour le choix de la base de données, nous étions recommandés d'utiliser des b
 données relationnelles tels que  PostgreSQL et MySQL. Ayant déjà utilisé MySQL, nous 
 avons décidé d'aller avec ce choix. Aussi, nous avions trouvé de la documentation 
 pour facilement intégrer une base de données MySQL à un projet en python. Aussi, en
-utilisant MySQL, nous uniformisons les bases de données utilisés à travers les 
+utilisant MySQL, nous uniformisons les bases de données utilisées à travers les 
 applications.
 
 ## Choix de la suite de test
@@ -36,37 +36,37 @@ continue.
 ## Choix technologiques pour l'intégration continue
 
 ### Pre-commit
-Pre-commit permet de facilement générer le fichier de pre-commit avec une seule 
-commande. Ceci permet de facilement uniformiser les pre-commit git hook et 
+Pre-commit permet de facilement générer le fichier de Pre-commit avec une seule 
+commande. Ceci permet de facilement uniformiser les pre-commit git hook 
 automatisant sa génération.
 
 ### Pylint
-Étant donnée que c'est la technologie recommandé dans le laboratoire et qu'il y a 
+Étant donné que c'est la technologie recommandée dans le laboratoire et qu'il y a 
 beaucoup de documentation pour l'utilisation de Pylint pour les pre-commit et les 
 Github Actions, nous avons décidé de choisir cette technologie. Pylint permet 
 d'exécuter facilement les étapes de linting et d'analyse de code.
 
 ### Black 21.9b0
-Étant donnée que c'est la technologie recommandé dans le laboratoire et qu'il y a 
+Étant donné que c'est la technologie recommandée dans le laboratoire et qu'il y a 
 beaucoup de documentation pour l'utilisation de Black pour les pre-commit et les 
 Github Actions, nous avons décidé de choisir cette technologie. Black permet de 
 valider le formatage du code.
 
 ### Pytest
-Ceci est seulement la même suites de tests que nous utilisons déjà dans le logiciel.
-Donc, il est normal que nous continuons à l'utiler pour exécuter les tests lors du
+Ceci est seulement la même suite de tests que nous utilisons déjà dans le logiciel.
+Donc, il est normal que nous continuions à l'utiles pour exécuter les tests lors du
 pre-commit git hook.
 
 ### Github Action
 Nous utilisons les Github Action pour facilement valider la qualité du code,
 tester le code, construire l'image Docker et la "push" sur DockerHub lorsque nous 
-poussons du code sur notre repo Github ou même quand on créer une pull-request. Les 
+poussons du code sur notre repo Github ou même quand on créer un pull-request. Les 
 Github Action sont un aussi un standard dans l'industrie. C'est une bonne manière 
-pour s'assurer la qualité du code présent dans repo. Aussi, les Github Action 
-permettent d'exécuter des actions de manière conditionnelle ce qui est parfait pour
+pour s'assurer la qualité du code présent dans le repo. Aussi, les Github Action 
+permettent d'exécuter des actions de manière conditionnelle, ce qui est parfait pour
 l'implémentation que nous devions faire.
 
 ### Docker Hub
 Docker Hub permet de facilement faire la gestion et le partage d'image Docker. C'est 
-semblable à github. Étant donnée que nous utilisons déjà Docker et que nous devions 
-déployer nos image sur Docker hub, nous n'avions pas vraiment le choix de l'utiliser.
+semblable à github. Étant donné que nous utilisons déjà Docker et que nous devions 
+déployer nos images sur Docker hub, nous n'avions pas vraiment le choix de l'utiliser.
