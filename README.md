@@ -30,7 +30,7 @@ pipenv install
 
 3. Ajouter les git hook:
 ```
-pip install pytest pylint pre-commit
+pip install pytest pylint pre-commit pytest-env
 pre-commit install
 ```
 
