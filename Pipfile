@@ -8,6 +8,7 @@ requests = "*"
 signalrcore = "*"
 python-dotenv = "*"
 mysql-connector-python = "*"
+pytest-env = "*"
 
 [dev-packages]
 
@@ -17,7 +18,7 @@ python_version = "3.9"
 [scripts]
 start = "python src/main.py"
 test = "pytest"
-lint = "# To implement"
+lint = "python lint.py -p ../OXYGEN-CS-GRP2-EQ1/src"
 
 [pipenv]
 allow_prereleases = true

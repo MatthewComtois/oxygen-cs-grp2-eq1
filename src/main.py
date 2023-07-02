@@ -2,54 +2,34 @@ import datetime
 import logging
 import json
 import time
-import os
 import requests
-from dotenv import load_dotenv
 from signalrcore.hub_connection_builder import HubConnectionBuilder
+from utils import get_env_var, get_env_var_strict
 from database import *
 
 
-load_dotenv()
-
-
 class Main:
+    """Main class"""
+
     def __init__(self):
+        """Main constructor"""
         self._hub_connection = None
-        self.host = (
-            os.getenv("HOST")
-            if (os.getenv("HOST") is not None and os.getenv("HOST"))
-            else "http://34.95.34.5"
-        )
-        if os.getenv("TOKEN") is not None and os.getenv("TOKEN"):
-            self.token = os.getenv("TOKEN")
-        else:
-            raise Exception(
-                "La variable 'Token' doit être définie comme variable d'environnement."
-            )
-        self.tickets = (
-            os.getenv("TICKETS")
-            if (os.getenv("TICKETS") is not None and os.getenv("TICKETS"))
-            else "25"
-        )
-        self.t_max = (
-            os.getenv("T_MAX")
-            if (os.getenv("T_MAX") is not None and os.getenv("HOST"))
-            else "80"
-        )
-        self.t_min = (
-            os.getenv("T_MIN")
-            if (os.getenv("T_MIN") is not None and os.getenv("T_MIN"))
-            else "60"
-        )
-        self.database = (
-            os.getenv("database_name")
-            if (os.getenv("database_name") is not None and os.getenv("database_name"))
-            else "oxygenCsGrp2Eq1E23Db"
-        )
+        self.host = get_env_var("HOST", "http://34.95.34.5", False)
+        self.token = get_env_var_strict("TOKEN", False)
+        self.tickets = get_env_var("TICKETS", "25", False)
+        self.t_max = get_env_var("T_MAX", "80", False)
+        self.t_min = get_env_var("T_MIN", "60", False)
+        self.database = get_env_var("database_name", "oxygenCsGrp2Eq1E23Db", False)
 
         try:
-            create_db(self.database)
-            self.mydb = connect_to_database(self.database)
+            database_host = get_env_var("database_host", "localhost", False)
+            database_user = get_env_var("database_user", "root", False)
+            database_password = get_env_var("database_password", "", True)
+            self.my_sql_db = MysqlDatabase(
+                database_host, database_user, database_password
+            )
+            self.my_sql_db.create_db(self.database)
+            self.mydb = self.my_sql_db.connect_to_database(self.database)
             self.mycursor = self.mydb.cursor()
         except requests.exceptions.RequestException as err:
             print(err)
@@ -125,7 +105,9 @@ class Main:
     def send_event_to_database(self, timestamp, event):
         """Send data to database"""
         try:
-            create_sensor_data_entry(self.mydb, self.mycursor, timestamp, event)
+            self.my_sql_db.create_sensor_data_entry(
+                self.mydb, self.mycursor, timestamp, event
+            )
         except requests.exceptions.RequestException as err:
             print(err)
 
