@@ -4,7 +4,7 @@ Ce document explique les différents choix technologiques faits lors de ce proje
 
 ## Choix technologie de l'API
 
-## signalrcore Python
+### signalrcore Python
 C'est la technologie de base qui était déjà implémentée. Donc, nous avons seulement
 continué à l'utiliser.
 
@@ -31,7 +31,9 @@ Docker est le standard dans l'industrie pour ce qui est de la conteneurisation
 d'application. C'était donc un choix assez facile à faire. De plus, il est indiqué
 dans le laboratoire d'utiliser Docker. En utilisant Docker, nous pouvons aussi
 déployé nos images sur Docker hub, ce qui est nécessaire pour la partie d'intégration
-continue.
+continue. Pour ce qui est de la creation de l'image et du build de l'image, nous 
+utilisons aussi des fichiers ".dockerignore" et "docker-compose.yml" pour faciliter
+le tout et reduire la taille de nos images.
 
 ## Choix technologiques pour l'intégration continue
 
