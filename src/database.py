@@ -83,7 +83,9 @@ class MysqlDatabase:
         """Check if the table exist in the database"""
         mydb = self.connect_to_database(db_name)
         mycursor = mydb.cursor()
-        mycursor.execute(f"SELECT '{table_name}' FROM information_schema.tables")
+        mycursor.execute(
+            f"SELECT * FROM information_schema.tables WHERE table_name = '{table_name}'"
+        )
         return mycursor.fetchone() is not None
 
     def check_if_record_exist(
