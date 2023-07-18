@@ -106,5 +106,5 @@ jobs:
       run:  |
           kubectl get pods
           kubectl apply -f oxygencs-deployment.yaml
-          kubectl set image deployment/oxygencs-app oxygencs-appr=${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1:${{github.run_number}}
+          kubectl set image deployment/oxygencs-app oxygencs-app=${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1:${{github.run_number}}
           kubectl get pods
