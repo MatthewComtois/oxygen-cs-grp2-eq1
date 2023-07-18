@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: oxygencs-app 
+  name: oxygencs-app 
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: oxygencs-app
+  template:
+    metadata:
+      labels:
+        app: oxygencs-app
+    spec:
+      containers:
+      - image: mattcomtoisets/oxygencsgrp02eq1:latest 
+        name: oxygencs-app
+        imagePullPolicy: Always        
+        resources:
+          limits:
+            cpu: "64m"
+            memory: "64Mi"
+          requests:
+            cpu: "32m"
+            memory: "0Mi"
+        env:
+          - name: HOST
+            valueFrom:
+              configMapKeyRef:
+                name: oxygencs-config-map
+                key: HOST
+          - name: database_host
+            valueFrom:
+              configMapKeyRef:
+                name: oxygencs-config-map
+                key: database_host
+          - name: database_name
+            valueFrom:
+              configMapKeyRef:
+                name: oxygencs-config-map
+                key: databaseName
+          - name: TICKETS
+            valueFrom:
+              configMapKeyRef:
+                name: oxygencs-config-map
+                key: TICKETS
+          - name: T_MAX
+            valueFrom:
+              configMapKeyRef:
+                name: oxygencs-config-map
+                key: T_MAX
+          - name: TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: oxygencs-secrets
+                key: TOKEN
+          - name: database_user
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secrets
+                key: user
+          - name: database_password
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secrets
+                key: password
+          
