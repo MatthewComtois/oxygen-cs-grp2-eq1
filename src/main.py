@@ -16,7 +16,7 @@ class Main:
         self._hub_connection = None
         self.host = get_env_var("HOST", "http://34.95.34.5", False)
         self.token = get_env_var_strict("TOKEN", False)
-        self.tickets = get_env_var("TICKETS", "25", False)
+        self.tickets = get_env_var("TICKETS", "2", False)
         self.t_max = get_env_var("T_MAX", "80", False)
         self.t_min = get_env_var("T_MIN", "60", False)
         self.database = get_env_var("database_name", "oxygenCsGrp2Eq1E23Db", False)
@@ -31,6 +31,10 @@ class Main:
             self.my_sql_db.create_db(self.database)
             self.mydb = self.my_sql_db.connect_to_database(self.database)
             self.mycursor = self.mydb.cursor()
+            if not self.my_sql_db.check_if_table_exist(self.database, "sensorDatas"):
+                self.my_sql_db.create_sensor_datas_table(self.mycursor)
+            if not self.my_sql_db.check_if_table_exist(self.database, "sensorActions"):
+                self.my_sql_db.create_sensor_actions_table(self.mycursor)
         except requests.exceptions.RequestException as err:
             print(err)
 
@@ -98,9 +102,12 @@ class Main:
 
     def send_action_to_hvac(self, date, action, nb_tick):
         """Send data to hvac"""
+        date_format = "%Y-%m-%dT%H:%M:%S.%f"
         request = requests.get(f"{self.host}/api/hvac/{self.token}/{action}/{nb_tick}")
         details = json.loads(request.text)
-        print(details)
+        converted_date = datetime.datetime.strptime(date[:25], date_format)
+        print(details["Response"])
+        self.send_action_to_database(converted_date, details["Response"])
 
     def send_event_to_database(self, timestamp, event):
         """Send data to database"""
@@ -111,7 +118,17 @@ class Main:
         except requests.exceptions.RequestException as err:
             print(err)
 
+    def send_action_to_database(self, timestamp, action):
+        """Send data to database"""
+        try:
+            self.my_sql_db.create_sensor_actions_entry(
+                self.mydb, self.mycursor, timestamp, action
+            )
+        except requests.exceptions.RequestException as err:
+            print(err)
+
 
 if __name__ == "__main__":
+    # test commentaire
     main = Main()
     main.start()
