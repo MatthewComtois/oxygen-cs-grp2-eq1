@@ -88,19 +88,3 @@ jobs:
           tags:  |
             ${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1:latest
             ${{ secrets.DOCKER_USER }}/oxygencsgrp02eq1:${{github.run_number}}
-  deploy:
-    name: Deploy to Kubernetes
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Create kubeconfig
-      run: |
-        mkdir ${HOME}/.kube
-        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-        cat ${HOME}/.kube/config
-    - name: Use context
-      run: kubectl config use-context gke_aesthetic-codex-388516_us-central1-c_log680-k8s
-    - name: Deploy to K8s
-      run: kubectl apply -f oxygencs-deployment.yaml

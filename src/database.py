@@ -38,7 +38,6 @@ class MysqlDatabase:
             mydb = self.connect_to_database(db_name)
             mycursor = mydb.cursor()
             self.create_sensor_datas_table(mycursor)
-            self.create_sensor_actions_table(mycursor)
             mydb.close()
 
     def create_sensor_datas_table(self, mycursor):
@@ -52,20 +51,6 @@ class MysqlDatabase:
         datetime_string = datetime.strftime("%Y-%m-%d %H:%M:%S")
         mycursor.execute(
             f"INSERT INTO sensorDatas (timestamp, temperature) VALUES ('{datetime_string}',{temperature})"
-        )
-        mydb.commit()
-
-    def create_sensor_actions_table(self, mycursor):
-        """Create a sensorActions table in the cursor databas"""
-        mycursor.execute(
-            "CREATE TABLE sensorActions (timestamp DATETIME PRIMARY KEY, action TEXT)"
-        )
-
-    def create_sensor_actions_entry(self, mydb, mycursor, datetime, action):
-        """Create an entry in the sensorActions table"""
-        datetime_string = datetime.strftime("%Y-%m-%d %H:%M:%S")
-        mycursor.execute(
-            f"INSERT INTO sensorActions (timestamp, action) VALUES ('{datetime_string}','{action}')"
         )
         mydb.commit()
 
