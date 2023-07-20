@@ -35,6 +35,18 @@ continue. Pour ce qui est de la creation de l'image et du build de l'image, nous
 utilisons aussi des fichiers ".dockerignore" et "docker-compose.yml" pour faciliter
 le tout et reduire la taille de nos images.
 
+## Choix technologiques pour le déploiement des container de l'application
+
+### Kubernetes
+Kubernetes permet de facilement déployer des conteneurs Docker. Il permet aussi de 
+facilement faire la gestion et de gérer la gestion de mise en échelle de ces conteneurs.
+Nous l'avons choisi primordialement, car c'est la technologie qui est demandée lors du 
+laboratoire. Cependant, même si ce choix ne nous était pas imposé, nous aurions quand
+même choisi d'utiliser Kubernetes. Nous utilisons différents fichiers de type yaml pour
+automatiser la création des pods, des déploiements, des services, des secrets et des
+config-map. Nous avons fait cela autant pour la base de données que pour l'application
+en soi.
+
 ## Choix technologiques pour l'intégration continue
 
 ### Pre-commit
@@ -72,3 +84,11 @@ l'implémentation que nous devions faire.
 Docker Hub permet de facilement faire la gestion et le partage d'image Docker. C'est 
 semblable à github. Étant donné que nous utilisons déjà Docker et que nous devions 
 déployer nos images sur Docker hub, nous n'avions pas vraiment le choix de l'utiliser.
+
+## Choix technologiques pour le déploiement continu
+
+### Github Action
+Étant donné que nous ont utilisait déjà des Github Action pour l'intégration en
+continu, nous avons décidé de continué à l'utiliser pour le déploiement en continu.
+Il est aussi pratique de voir à un seul endroit, github, si notre intégration et 
+notre déploiement à fonctionner. 

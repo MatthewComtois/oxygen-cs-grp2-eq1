@@ -54,6 +54,15 @@ After setup, you can start the program with the following command:
 pipenv run start
 ```
 
+## Déploiement sur Kubernetes
+
+Des fichiers pour créer le pod et le service de la base de données et ainsi que le déploiement de l'application 
+oxygen-cs vous sont fournis pour faciliter le déploiement sur Kubernetes. Vous pouvez l'explorer à votre gré 
+pour avoir une meilleure compréhension de ce qu'il accomplit. Il est important de noter qu'il y a des variables 
+d'environnement de Kubernetes qui doivent être créé. Nous avons fourni des gabarits pour les différents "secret" 
+et "config map". Toutefois, pour des raisons de sécurité, nous avons enlevé nos valeurs associées à ses variables. 
+Vous devez donc inscrire vos propres valeurs.
+
 ## Logging
 
 The application logs important events such as connection open/close and error events to help in troubleshooting.
