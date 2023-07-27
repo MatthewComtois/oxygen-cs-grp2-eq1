@@ -92,3 +92,11 @@ déployer nos images sur Docker hub, nous n'avions pas vraiment le choix de l'ut
 continu, nous avons décidé de continué à l'utiliser pour le déploiement en continu.
 Il est aussi pratique de voir à un seul endroit, github, si notre intégration et 
 notre déploiement à fonctionner. 
+
+## Choix technologiques pour le monitoring
+
+### Grafana
+Puisque notre système de ventilation enregistre ces états dans une base de données,
+nous avons besion d'une interface qui nous permet de les observer d'une manière plus
+conviviale. Grafana se connecte à notre base de données afin d'afficher sont contenu
+de plusieurs façon, à la tableur Excel.
