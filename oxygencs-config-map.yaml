@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oxygencs-config-map
+data:
+    HOST: TODO - METTRE LA BONNE VALEUR
+    TICKETS: TODO - METTRE LA BONNE VALEUR
+    T_MAX: TODO - METTRE LA BONNE VALEUR  
+    T_MIN: TODO - METTRE LA BONNE VALEUR  
+    database_host: TODO - METTRE LA BONNE VALEUR
+    databaseName: TODO - METTRE LA BONNE VALEUR

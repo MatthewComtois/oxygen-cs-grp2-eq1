@@ -31,9 +31,15 @@ class Main:
             self.my_sql_db.create_db(self.database)
             self.mydb = self.my_sql_db.connect_to_database(self.database)
             self.mycursor = self.mydb.cursor()
-            if not self.my_sql_db.check_if_table_exist(self.database, "sensorDatas"):
+            if (
+                self.my_sql_db.check_if_table_exist(self.database, "sensorDatas")
+                is False
+            ):
                 self.my_sql_db.create_sensor_datas_table(self.mycursor)
-            if not self.my_sql_db.check_if_table_exist(self.database, "sensorActions"):
+            if (
+                self.my_sql_db.check_if_table_exist(self.database, "sensorActions")
+                is False
+            ):
                 self.my_sql_db.create_sensor_actions_table(self.mycursor)
         except requests.exceptions.RequestException as err:
             print(err)
